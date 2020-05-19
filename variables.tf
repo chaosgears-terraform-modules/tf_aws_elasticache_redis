@@ -22,7 +22,7 @@ variable "region" {
 variable "apply_immediately" {
   description = "Specifies whether any modifications are applied immediately, or during the next maintenance window. Default is false."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "allowed_cidr" {
