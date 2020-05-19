@@ -1,6 +1,6 @@
 provider "aws" {
   region = var.region
-  version = var.version
+  version = "~> 2.62.0"
 }
 
 data "aws_vpc" "vpc" {
