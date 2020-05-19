@@ -14,6 +14,11 @@ variable "alarm_actions" {
 }
 */
 
+variable "region" {
+  type = string
+  description = "Region name"
+}
+
 variable "apply_immediately" {
   description = "Specifies whether any modifications are applied immediately, or during the next maintenance window. Default is false."
   type        = bool

@@ -3,6 +3,10 @@ provider "aws" {
   version = "~> 2.62.0"
 }
 
+provider "random" {
+  version = "~> 2.2"
+}
+
 data "aws_vpc" "vpc" {
   id = var.vpc_id
 }
