@@ -1,7 +1,3 @@
-output "redis_security_group_id" {
-  value = aws_security_group.redis_security_group.id
-}
-
 output "parameter_group" {
   value = aws_elasticache_parameter_group.redis_parameter_group.id
 }

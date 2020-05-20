@@ -1,28 +1,27 @@
-resource "aws_security_group" "redis_security_group" {
-  name        = format("%.255s", "tf-sg-ec-${var.name}-${var.env}-${data.aws_vpc.vpc.tags["Name"]}")
-  description = "Terraform-managed ElastiCache security group for ${var.name}-${var.env}-${data.aws_vpc.vpc.tags["Name"]}"
-  vpc_id      = data.aws_vpc.vpc.id
+module "security_group" {
+  source = "git@github.com:chaosgears-terraform-modules/terraform-aws-security-group.git//?ref=master"
 
-  tags = {
-    Name = "tf-sg-ec-${var.name}-${var.env}-${data.aws_vpc.vpc.tags["Name"]}"
-  }
-}
+  name = var.sg_name
 
-resource "aws_security_group_rule" "redis_ingress" {
-  count                    = length(var.allowed_security_groups)
-  type                     = "ingress"
-  from_port                = var.redis_port
-  to_port                  = var.redis_port
-  protocol                 = "tcp"
-  source_security_group_id = element(var.allowed_security_groups, count.index)
-  security_group_id        = aws_security_group.redis_security_group.id
-}
+  description = "Security group for example usage with EC2 instance"
+  vpc_id = var.vpc_id
 
-resource "aws_security_group_rule" "redis_networks_ingress" {
-  type              = "ingress"
-  from_port         = var.redis_port
-  to_port           = var.redis_port
-  protocol          = "tcp"
-  cidr_blocks       = var.allowed_cidr
-  security_group_id = aws_security_group.redis_security_group.id
+  ingress_with_cidr_blocks = [
+    {
+      rule = "redis-tcp"
+      cidr_blocks = var.allowed_cidr[0]
+    },
+    {
+      rule = "redis-tcp"
+      cidr_blocks = var.allowed_cidr[1]
+    }
+  ]
+  egress_with_cidr_blocks = [
+    {
+      rule = "all-all"
+    }
+  ]
+
+  tags = var.tags
+
 }

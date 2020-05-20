@@ -14,16 +14,25 @@ variable "alarm_actions" {
 }
 */
 
+variable "region" {
+  type = string
+  description = "Region name"
+}
+
 variable "apply_immediately" {
   description = "Specifies whether any modifications are applied immediately, or during the next maintenance window. Default is false."
   type        = bool
-  default     = false
+  default     = true
+}
+
+variable "sg_name" {
+  type = string
+  description = "SG name"
 }
 
 variable "allowed_cidr" {
   description = "A list of Security Group ID's to allow access to."
   type        = list(string)
-  default     = ["127.0.0.1/32"]
 }
 
 variable "allowed_security_groups" {
