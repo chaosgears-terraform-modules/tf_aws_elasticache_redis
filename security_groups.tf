@@ -1,5 +1,5 @@
 module "security_group" {
-  source = "git@github.com:chaosgears-terraform-modules/terraform-aws-security-group.git//?ref=master"
+  source = "git@github.com:chaosgears-terraform-modules/terraform-aws-security-group.git//?ref=v3.4.2"
 
   name = var.sg_name
 
