@@ -25,10 +25,14 @@ variable "apply_immediately" {
   default     = true
 }
 
+variable "sg_name" {
+  type = string
+  description = "SG name"
+}
+
 variable "allowed_cidr" {
   description = "A list of Security Group ID's to allow access to."
   type        = list(string)
-  default     = ["127.0.0.1/32"]
 }
 
 variable "allowed_security_groups" {

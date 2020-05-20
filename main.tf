@@ -25,18 +25,18 @@ resource "aws_elasticache_replication_group" "redis" {
   port                          = var.redis_port
   parameter_group_name          = aws_elasticache_parameter_group.redis_parameter_group.id
   subnet_group_name             = aws_elasticache_subnet_group.redis_subnet_group.id
-  security_group_ids            = [aws_security_group.redis_security_group.id]
+  security_group_ids            = [module.security_group.this_security_group_id]
   apply_immediately             = var.apply_immediately
   maintenance_window            = var.redis_maintenance_window
   snapshot_window               = var.redis_snapshot_window
   snapshot_retention_limit      = var.redis_snapshot_retention_limit
-  tags                          = merge(map("Name", format("tf-elasticache-%s-%s", var.name, lookup(data.aws_vpc.vpc.tags, "Name", ""))), var.tags)
+  tags                          = merge(map("Name", format("tf-elasticache-%s", var.name), var.tags))
 }
 
 resource "aws_elasticache_parameter_group" "redis_parameter_group" {
   name = replace(format("%.255s", lower(replace("${var.name}-${var.env}-${random_id.salt.hex}", "_", "-"))), "/\\s/", "-")
 
-  description = "Terraform-managed ElastiCache parameter group for ${var.name}-${var.env}-${data.aws_vpc.vpc.tags["Name"]}"
+  description = "Terraform-managed ElastiCache parameter group for ${var.name}-${var.env}"
 
   # Strip the patch version from redis_version var
   family = "redis${replace(var.redis_version, "/\\.[\\d]+$/", "")}"
