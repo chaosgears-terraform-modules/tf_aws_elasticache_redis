@@ -58,7 +58,7 @@ variable "redis_clusters" {
 
 variable "redis_failover" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "redis_node_type" {
