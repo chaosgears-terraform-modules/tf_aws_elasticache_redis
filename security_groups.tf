@@ -3,6 +3,8 @@ module "security_group" {
 
   name = var.sg_name
 
+  region = var.region
+
   description = "Security group for example usage with EC2 instance"
   vpc_id = var.vpc_id
 
