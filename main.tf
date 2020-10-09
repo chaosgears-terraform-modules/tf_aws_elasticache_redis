@@ -1,6 +1,7 @@
 provider "aws" {
   region = var.region
   version = "~> 2.62.0"
+  skip_region_validation = true
 }
 
 provider "random" {
